@@ -122,14 +122,14 @@ function removeSelected() {
 
 window.onload = () => {
   const createTaskButton = document.getElementById('criar-tarefa');
-  // const removeButtonElement = document.getElementById('remover-finalizados');
+  const removeButtonElement = document.getElementById('remover-finalizados');
   const clearButtonElement = document.getElementById('apaga-tudo');
   const saveTaskButtonElement = document.getElementById('salvar-tarefas');
   const moveUpButtonElement = document.getElementById('mover-cima');
   const moveDownButtonElement = document.getElementById('mover-baixo');
   // const removeSelectedElement = document.getElementById('remover-selecionado');
 
-  // removeButtonElement.onclick = removeDoneTask;
+  removeButtonElement.onclick = removeDoneTask;
   createTaskButton.onclick = createTask;
   clearButtonElement.onclick = clearTaskButton;
   saveTaskButtonElement.onclick = saveAllTasks;
