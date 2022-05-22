@@ -1,5 +1,7 @@
 const taskList = document.getElementById('lista-tarefas');
 
+const taskClass = 'task bg-gray-100 rounded-lg p-2 text-lg border-2 border-gray-400 mb-4'
+
 function selectTask(item) {
   const taskItem = item;
   const tasksList = document.getElementsByClassName('task');
@@ -7,16 +9,26 @@ function selectTask(item) {
   for (let index = 0; index < tasksList.length; index += 1) {
     tasksList[index].style.backgroundColor = '';
     tasksList[index].classList.remove('selected');
+    tasksList[index].classList.remove('border-black');
   }
 
   taskItem.classList.add('selected');
+  taskItem.classList.add('border-black');
 
 }
 
 function toggleDoneTask(item) {
   const taskItem = item;
+  const taskText = taskItem.outerText
+  
+  if(taskItem.classList.contains('completed')) {
+    taskItem.innerHTML = `<i class="far fa-circle mr-4"></i>${taskText}`
+  } else {
+    taskItem.innerHTML =`<i class="fas fa-circle mr-4"></i>${taskText}` ;
+  }
 
   taskItem.classList.toggle('completed');
+  taskItem.classList.toggle('line-through');
 }
 
 function clearTaskButton() {
@@ -33,12 +45,12 @@ function createTask() {
   }
 
   const taskItem = document.createElement('li');
-  taskItem.innerHTML = taskInputName.value;
-  taskItem.className = 'task';
+  taskItem.innerHTML =`<i class="far fa-circle mr-4"></i>${taskInputName.value}` ;
+  taskItem.className = taskClass;
   taskItem.onclick = () => selectTask(taskItem);
   taskItem.ondblclick = () => toggleDoneTask(taskItem);
-
   taskInputName.value = '';
+
   taskList.appendChild(taskItem);
 }
 
@@ -70,8 +82,8 @@ function getTasksFromStorage() {
 
   for (let index = 0; index < tasks.length; index += 1) {
     const taskItem = document.createElement('li');
-    taskItem.innerHTML = tasks[index].name;
-    taskItem.className = 'task';
+    taskItem.innerHTML  = tasks[index].name;
+    taskItem.className = taskClass;
     if (tasks[index].completed) {
       taskItem.classList.add('completed');
     }
@@ -82,7 +94,6 @@ function getTasksFromStorage() {
   }
 }
 
-// Referência: https://github.com/tryber/sd-010-a-project-todo-list/pull/94/files
 function moveTaskDown() {
   const selectedTask = document.querySelector('.selected');
   if (selectedTask !== null) {
@@ -93,7 +104,6 @@ function moveTaskDown() {
   }
 }
 
-// Referência: https://github.com/tryber/sd-010-a-project-todo-list/pull/94/files
 function moveTaskUp() {
   const selectedTask = document.querySelector('.selected');
   if (!selectedTask) {
@@ -112,20 +122,20 @@ function removeSelected() {
 
 window.onload = () => {
   const createTaskButton = document.getElementById('criar-tarefa');
-  const removeButtonElement = document.getElementById('remover-finalizados');
+  // const removeButtonElement = document.getElementById('remover-finalizados');
   const clearButtonElement = document.getElementById('apaga-tudo');
   const saveTaskButtonElement = document.getElementById('salvar-tarefas');
   const moveUpButtonElement = document.getElementById('mover-cima');
   const moveDownButtonElement = document.getElementById('mover-baixo');
-  const removeSelectedElement = document.getElementById('remover-selecionado');
+  // const removeSelectedElement = document.getElementById('remover-selecionado');
 
-  removeButtonElement.onclick = removeDoneTask;
+  // removeButtonElement.onclick = removeDoneTask;
   createTaskButton.onclick = createTask;
   clearButtonElement.onclick = clearTaskButton;
   saveTaskButtonElement.onclick = saveAllTasks;
   moveUpButtonElement.onclick = moveTaskUp;
   moveDownButtonElement.onclick = moveTaskDown;
-  removeSelectedElement.onclick = removeSelected;
+  // removeSelectedElement.onclick = removeSelected;
 
   getTasksFromStorage();
 };
